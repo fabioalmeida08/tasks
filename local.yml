@@ -1,17 +1,14 @@
 - hosts: localhost
   vars:
-    distro: "{{ ansible_distribution }}"
     user: "{{ ansible_env.USER }}"
-    ipaddr: "{{ ansible_default_ipv4.address }}"
-  connection: local
-  become: true
+    distro: "{{ ansible_distribution }}"
   tasks:
-    - name: Print variable values
+    - name: Print variable
       debug:
-        var:
-          distro: "{{ distro }}"
-          user: "{{ user }}"
-          ipaddr: "{{ ipaddr }}"
+        var: user
+    - name: print distro
+      debug:
+        var: distro
 
 
 # - hosts: localhost
