@@ -5,10 +5,10 @@
     ipaddr: "{{ ansible_default_ipv4.address }}"
   connection: local
   become: true
-  become_user: "{{ user }}"
 
   pre_tasks:
     - name: pre-run | check requirements
+      become_user: "{{ user }}" 
       tags: always
       package:
         name: "{{ item }}"
