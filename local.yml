@@ -1,0 +1,42 @@
+- hosts: localhost
+  connection: local
+  become: false
+  vars:
+    distro: "{{ ansible_distribution }}"
+
+  pre_tasks:
+    - name: pre-run | check requirements
+      tags: always
+      package:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - python-psutil
+        - python-pip
+        - python-setuptools
+
+    - name: Install github module
+      ansible.builtin.pip:
+        name: github3.py
+
+    - name: Enable Multilib
+      replace:
+        path: "/etc/pacman.conf"
+        regexp: '#\[multilib]\n#Include = \/etc\/pacman.d\/mirrorlist'
+        replace: |
+          [multilib]
+          Include = /etc/pacman.d/mirrorlist
+      when: distro == 'Archlinux'
+
+- hosts: localhost
+  connection: local
+  become: true
+  vars:
+    distro: "{{ ansible_distribution }}"
+
+  tasks:
+    - name: main task 1
+      ...
+
+    - name: main task 2
+      ...
