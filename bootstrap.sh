@@ -19,7 +19,7 @@ check_requirements () {
 
 run_playbook () {
     cd "$( dirname "$0" )"
-    sudo ansible-playbook local.yml -K
+    ansible-playbook local.yml -K
 }
 sudo pacman -Syu
 check_requirements
