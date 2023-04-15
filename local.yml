@@ -35,8 +35,8 @@
     distro: "{{ ansible_distribution }}"
 
   tasks:
-    - name: main task 1
-      ...
-
-    - name: main task 2
-      ...
+    - name: software | unzip | install package
+      tags: unzip, packages, workstation-packages
+      package:
+        name: unzip
+        state: latest
