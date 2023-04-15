@@ -1,11 +1,11 @@
 - hosts: localhost
-  connection: local
-  become: true
-  become_user: "{{ user }}"
   vars:
     distro: "{{ ansible_distribution }}"
     user: "{{ ansible_env.SUDO_USER }}"
     ipaddr: "{{ ansible_default_ipv4.address }}"
+  connection: local
+  become: true
+  become_user: "{{ user }}"
 
   pre_tasks:
     - name: pre-run | check requirements
