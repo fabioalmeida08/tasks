@@ -1,7 +1,7 @@
 - hosts: localhost
   vars:
     distro: "{{ ansible_distribution }}"
-    user: "{{ ansible_env.SUDO_USER }}"
+    user: "{{ ansible_env.USER }}"
     ipaddr: "{{ ansible_default_ipv4.address }}"
   connection: local
   become: true
