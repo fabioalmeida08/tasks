@@ -5,41 +5,57 @@
     ipaddr: "{{ ansible_default_ipv4.address }}"
   connection: local
   become: true
-
-  pre_tasks:
-    - name: pre-run | check requirements
-      become_user: "{{ user }}" 
-      tags: always
-      package:
-        name: "{{ item }}"
-        state: latest
-      loop:
-        - python-psutil
-        - python-pip
-        - python-setuptools
-
-    - name: Install github module
-      ansible.builtin.pip:
-        name: github3.py
-
-    - name: Enable Multilib
-      replace:
-        path: "/etc/pacman.conf"
-        regexp: '#\[multilib]\n#Include = \/etc\/pacman.d\/mirrorlist'
-        replace: |
-          [multilib]
-          Include = /etc/pacman.d/mirrorlist
-      when: distro == 'Archlinux'
-
-- hosts: localhost
-  connection: local
-  become: true
-  vars:
-    distro: "{{ ansible_distribution }}"
-
   tasks:
-    - name: software | unzip | install package
-      tags: unzip, packages, workstation-packages
-      package:
-        name: unzip
-        state: latest
+    - name: Print variable values
+      debug:
+        var:
+          distro: "{{ distro }}"
+          user: "{{ user }}"
+          ipaddr: "{{ ipaddr }}"
+
+
+# - hosts: localhost
+#   vars:
+#     distro: "{{ ansible_distribution }}"
+#     user: "{{ ansible_env.USER }}"
+#     ipaddr: "{{ ansible_default_ipv4.address }}"
+#   connection: local
+#   become: true
+
+#   pre_tasks:
+#     - name: pre-run | check requirements
+#       become_user: "{{ user }}" 
+#       tags: always
+#       package:
+#         name: "{{ item }}"
+#         state: latest
+#       loop:
+#         - python-psutil
+#         - python-pip
+#         - python-setuptools
+
+#     - name: Install github module
+#       ansible.builtin.pip:
+#         name: github3.py
+
+#     - name: Enable Multilib
+#       replace:
+#         path: "/etc/pacman.conf"
+#         regexp: '#\[multilib]\n#Include = \/etc\/pacman.d\/mirrorlist'
+#         replace: |
+#           [multilib]
+#           Include = /etc/pacman.d/mirrorlist
+#       when: distro == 'Archlinux'
+
+# - hosts: localhost
+#   connection: local
+#   become: true
+#   vars:
+#     distro: "{{ ansible_distribution }}"
+
+#   tasks:
+#     - name: software | unzip | install package
+#       tags: unzip, packages, workstation-packages
+#       package:
+#         name: unzip
+#         state: latest
